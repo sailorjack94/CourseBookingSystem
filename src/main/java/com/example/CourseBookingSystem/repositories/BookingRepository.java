@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
-    List<Booking> findByDate(String date);
+    List<Booking> findByDateIgnoreCase(String date);
 }

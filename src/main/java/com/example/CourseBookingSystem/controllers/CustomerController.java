@@ -27,7 +27,26 @@ public class CustomerController {
 
     @GetMapping(value = "/customers/booking")
     public ResponseEntity<List<Customer>> getByCourseName(@RequestParam(name = "courseName", required = false) String courseName){
-        return new ResponseEntity<>(customerRepository.findByBookingsCourseName(courseName),HttpStatus.OK);
+        return new ResponseEntity<>(customerRepository.findByBookingsCourseNameIgnoreCase(courseName),HttpStatus.OK);
     }
+
+    @GetMapping(value= "customers/town")
+    public ResponseEntity<List<Customer>> getByTownAndCourseName(
+            @RequestParam(name = "town", required = false) String town,
+            @RequestParam(name = "courseName", required = false) String courseName
+    ){
+        return new ResponseEntity<>(customerRepository.findByTownAndBookingsCourseName(town, courseName), HttpStatus.OK);
+    }
+
+    @GetMapping(value= "customers/age")
+    public ResponseEntity<List<Customer>> getByAgeAndTownAndCourseName(
+            @RequestParam(name = "minAge", required = false) int minAge,
+            @RequestParam(name = "town", required = false) String town,
+            @RequestParam(name = "courseName", required = false) String courseName
+    ){
+        return new ResponseEntity<>(customerRepository.findByAgeGreaterThanAndTownIgnoreCaseAndBookingsCourseNameIgnoreCase(minAge, town, courseName), HttpStatus.OK);
+    }
+
+
 
 }
